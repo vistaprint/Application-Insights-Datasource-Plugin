@@ -1,0 +1,23 @@
+{
+  "name": "AppInsights",
+  "type": "datasource",
+  "id": "appinsights",
+
+  "metrics": true,
+  "annotations": false,
+
+  "info": {
+    "author": {
+      "name": "Vistaprint",
+      "url": "https://vbustash.vistaprint.net/projects/GRAF/repos/app-insights-datasource-plugin"
+    },
+    "logos": {
+      "small": "img/appInsights_logo.png",
+      "large": "img/appInsights_logo.png"
+    },
+    "dependencies": {
+      "grafanaVersion": "^3.0.1",
+      "plugins": [ ]
+    }
+  }
+}

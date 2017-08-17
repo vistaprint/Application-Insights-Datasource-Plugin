@@ -1,0 +1,28 @@
+<query-editor-row query-ctrl="ctrl">
+
+  <div class="gf-form-inline">
+    <!-- Metric -->
+    <div class="gf-form">
+      <label class="gf-form-label query-keyword width-8">Metric</label>
+      <select ng-model="ctrl.target.metric" class="gf-form-input width-16" ng-options="metric as metric for metric in ctrl.metrics_types"
+        ng-change="ctrl.resetAggregation(ctrl.target.metric)">
+      </select>
+    </div>
+    <!-- Aggregation -->
+    <div class="gf-form">
+      <label class="gf-form-label query-keyword width-8">Aggregation</label>
+      <select ng-model="ctrl.target.aggregation" class="gf-form-input width-16" ng-options="aggregation as aggregation for aggregation in ctrl.aggregations"
+        ng-change="ctrl.onChangeInternal()">
+      </select>
+    </div>
+  </div>
+
+  <div class="gf-form-inline">
+    <div class="gf-form gf-form--grow">
+      <label class="gf-form-label query-keyword width-8">Series Alias</label>
+      <input type="text" class="gf-form-input width-16" ng-model="ctrl.target.alias" spellcheck='false' placeholder="Naming pattern"
+        ng-blur="ctrl.refresh()">
+    </div>
+  </div>
+
+</query-editor-row>
