@@ -1,7 +1,7 @@
 {
-  "name": "appinsights-datasource",
+  "name": "applicationinsights-datasource",
   "version": "1.0.0",
-  "description": "Datasource for interacting with the Application Insigths",
+  "description": "Datasource for interacting with the Application Insigths REST API",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

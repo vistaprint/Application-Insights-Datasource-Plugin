@@ -17,8 +17,22 @@ System.register(['app/plugins/sdk'], function(exports_1) {
                 /** @ngInject **/
                 function AppInsightsQueryCtrl($scope, $injector) {
                     _super.call(this, $scope, $injector);
+                    this.apiTypes = ["Metric", "Query"];
+                    this.operators = [
+                        { value: '', label: 'none' },
+                        { value: '+', label: '+' },
+                        { value: '-', label: '-' },
+                        { value: '*', label: '*' },
+                        { value: '/', label: '/' },
+                    ];
+                    this.operand2types = [
+                        { value: 'metric', label: 'metric' },
+                        { value: 'constant', label: 'constant' },
+                    ];
                     this.getMetricOptions();
                     this.resetAggregation(this.target.metric);
+                    this.toggleOperand2();
+                    this.toggleOperand2type();
                 }
                 ;
                 AppInsightsQueryCtrl.prototype.getMetricOptions = function () {
@@ -39,7 +53,52 @@ System.register(['app/plugins/sdk'], function(exports_1) {
                     this.aggregations = this.datasource.getAggregations(metric).then(function (aggregations) {
                         _this.aggregations = aggregations;
                     });
-                    this.refresh();
+                };
+                AppInsightsQueryCtrl.prototype.resetAggregationOperand2 = function (metric) {
+                    var _this = this;
+                    this.aggregationsOperand2 = this.datasource.getAggregations(metric).then(function (aggregations) {
+                        _this.aggregationsOperand2 = aggregations;
+                    });
+                };
+                // Shows the second operand selection if the operator is defined
+                AppInsightsQueryCtrl.prototype.toggleType = function () {
+                    if (this.target.type != "metric") {
+                        this.isOperand2Visible = false;
+                        this.target.metric = "";
+                        this.target.aggregations = "";
+                        this.target.operator = "";
+                        this.target.constantOperand2 = "";
+                        this.target.metricOperand2 = "";
+                        this.target.aggregationsOperand2 = "";
+                    }
+                };
+                // Shows the second operand selection if the operator is defined
+                AppInsightsQueryCtrl.prototype.toggleOperand2 = function () {
+                    if (this.target.operator != "") {
+                        this.isOperand2Visible = true;
+                    }
+                    else {
+                        this.isOperand2Visible = false;
+                        this.target.constantOperand2 = "";
+                        this.target.metricOperand2 = "";
+                        this.target.aggregationsOperand2 = "";
+                        this.refresh();
+                    }
+                };
+                // Shows the metric or constant operand 2
+                AppInsightsQueryCtrl.prototype.toggleOperand2type = function () {
+                    if (!this.isOperand2Visible) {
+                        this.isOperand2metric = false;
+                        this.isOperand2constant = false;
+                    }
+                    else if (this.target.operand2type == 'metric') {
+                        this.isOperand2metric = true;
+                        this.isOperand2constant = false;
+                    }
+                    else if (this.target.operand2type == 'constant') {
+                        this.isOperand2metric = false;
+                        this.isOperand2constant = true;
+                    }
                 };
                 AppInsightsQueryCtrl.prototype.onChangeInternal = function () {
                     this.refresh(); // Asks the panel to refresh data.

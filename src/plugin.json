@@ -1,7 +1,7 @@
 {
-  "name": "AppInsights",
+  "name": "ApplicationInsights",
   "type": "datasource",
-  "id": "appinsights",
+  "id": "applicationinsights",
 
   "metrics": true,
   "annotations": false,
@@ -9,7 +9,7 @@
   "info": {
     "author": {
       "name": "Vistaprint",
-      "url": "https://vbustash.vistaprint.net/projects/GRAF/repos/app-insights-datasource-plugin"
+      "url": "http://www.vistaprint.com/"
     },
     "logos": {
       "small": "img/appInsights_logo.png",

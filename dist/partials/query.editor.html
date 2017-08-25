@@ -1,28 +1,82 @@
 <query-editor-row query-ctrl="ctrl">
 
   <div class="gf-form-inline">
-    <!-- Metric -->
+    <!-- Alias -->
     <div class="gf-form">
-      <label class="gf-form-label query-keyword width-8">Metric</label>
-      <select ng-model="ctrl.target.metric" class="gf-form-input width-16" ng-options="metric as metric for metric in ctrl.metrics_types"
-        ng-change="ctrl.resetAggregation(ctrl.target.metric)">
-      </select>
-    </div>
-    <!-- Aggregation -->
-    <div class="gf-form">
-      <label class="gf-form-label query-keyword width-8">Aggregation</label>
-      <select ng-model="ctrl.target.aggregation" class="gf-form-input width-16" ng-options="aggregation as aggregation for aggregation in ctrl.aggregations"
-        ng-change="ctrl.onChangeInternal()">
-      </select>
-    </div>
-  </div>
-
-  <div class="gf-form-inline">
-    <div class="gf-form gf-form--grow">
       <label class="gf-form-label query-keyword width-8">Series Alias</label>
       <input type="text" class="gf-form-input width-16" ng-model="ctrl.target.alias" spellcheck='false' placeholder="Naming pattern"
         ng-blur="ctrl.refresh()">
     </div>
+    <!-- Type -->
+    <div class="gf-form">
+      <label class="gf-form-label query-keyword width-8">Type</label>
+      <select ng-model="ctrl.target.type" class="gf-form-input width-8" ng-options="type as type for type in ctrl.apiTypes"
+        ng-change="ctrl.toggleType()">
+      </select>
+    </div>
   </div>
+
+  <!-- Metric Partial-->
+  <div class="gf-form-inline" ng-show="ctrl.target.type=='Metric'">
+    <!-- Metric -->
+    <div class="gf-form gf-form--grow">
+      <label class="gf-form-label query-keyword width-8">Metric</label>
+
+      <!-- Operand1 -->
+      <!-- Metric type -->
+      <select ng-model="ctrl.target.metric" class="gf-form-input width-20" ng-options="metric as metric for metric in ctrl.metrics_types"
+        ng-change="ctrl.resetAggregation(ctrl.target.metric)">
+      </select>
+      <!-- Aggregation -->
+      <select ng-model="ctrl.target.aggregation" class="gf-form-input width-6" ng-options="aggregation as aggregation for aggregation in ctrl.aggregations"
+      ng-change="ctrl.toggleOperand2()">
+      </select>
+
+      <!-- Operator -->
+      <select ng-model="ctrl.target.operator" class="gf-form-input width-6"
+        ng-options="operator.value as operator.label for operator in ctrl.operators"
+        ng-change="ctrl.toggleOperand2()">
+      </select>
+
+      <!-- Operand2 -->
+      <div class="gf-form gf-form--grow" ng-show="ctrl.isOperand2Visible">
+        <!-- Operand2 type -->
+        <select ng-model="ctrl.target.operand2type" class="gf-form-input width-6"
+          ng-options="operand2type.value as operand2type.label for operand2type in ctrl.operand2types"
+          ng-change="ctrl.toggleOperand2type()">
+        </select>
+
+        <div class="gf-form gf-form--grow" ng-show="ctrl.isOperand2metric">
+          <!-- Metric type -->
+          <select ng-model="ctrl.target.metricOperand2" class="gf-form-input width-20" ng-options="metric as metric for metric in ctrl.metrics_types"
+            ng-change="ctrl.resetAggregationOperand2(ctrl.target.metricOperand2)">
+          </select>
+          <!-- Aggregation -->
+          <select ng-model="ctrl.target.aggregationOperand2" class="gf-form-input width-6" ng-options="aggregation as aggregation for aggregation in ctrl.aggregationsOperand2"
+            ng-change="ctrl.onChangeInternal()">
+          </select>
+        </div>
+
+        <div class="gf-form gf-form--grow" ng-show="ctrl.isOperand2constant">
+            <!-- Constant -->
+            <input type="number" class="gf-form-input width-6" ng-model="ctrl.target.constantOperand2" ng-blur="ctrl.onChangeInternal()">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Query Partial -->
+  <div class="gf-form-inline" ng-show="ctrl.target.type=='Query'">
+    <!-- Query -->
+    <div class="gf-form gf-form--grow">
+      <label class="gf-form-label query-keyword width-8">Query</label>
+      <textarea class="gf-form-input width-32 height-16" ng-model="ctrl.target.query" spellcheck='false' placeholder="Application Insights Analytics Query"
+
+        ng-blur="ctrl.refresh()">
+    </div>
+  </div>
+
+
 
 </query-editor-row>
